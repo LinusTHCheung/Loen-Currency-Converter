@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function convertCurrency() {
+            const penceToAUDRate = 1.10; // 1 pence = 1.10 AUD
+            const soliToPenceRate = 12; // 1 soli = 12 pence
+            const poundToSoliRate = 20; // 1 pound = 20 soli
+
+            // Get input values
+            const pounds = parseInt(document.getElementById('pounds').value) || 0;
+            const soli = parseInt(document.getElementById('soli').value) || 0;
+            const pence = parseInt(document.getElementById('pence').value) || 0;
+
+            // Convert everything to pence
+            const totalPence = (pounds * poundToSoliRate * soliToPenceRate) + (soli * soliToPenceRate) + pence;
+
+            // Convert pence to AUD
+            const audAmount = totalPence * penceToAUDRate;
+
+            // Display the result
+            document.getElementById('result').innerText = `${pounds} pounds, ${soli} soli, and ${pence} pence = $${audAmount.toFixed(2)} AUD`;
+        }
+    </script>
+</head>
+<body>
+    <h1>Loen Currency to AUD Converter</h1>
+    <form onsubmit="event.preventDefault(); convertCurrency();">
+        <label for="pounds">Enter amount in pounds:</label>
+        <input type="number" id="pounds" min="0">
+
+        <label for="soli">Enter amount in soli:</label>
+        <input type="number" id="soli" min="0">
+
+        <label for="pence">Enter amount in pence:</label>
+        <input type="number" id="pence" min="0">
+
+        <button type="submit">Convert</button>
+    </form>
+
+    <h2>Conversion Result:</h2>
+    <p id="result">Enter values to see the result.</p>
+</body>
+</html>
