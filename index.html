@@ -11,10 +11,21 @@
             const soliToPenceRate = 12; // 1 soli = 12 pence
             const poundToSoliRate = 20; // 1 pound = 20 soli
 
+            // Exchange rates relative to AUD
+            const exchangeRates = {
+                AUD: 1,
+                USD: 0.64,
+                GBP: 0.52,
+                PHP: 36,
+                YEN: 94,
+                CAD: 0.87
+            };
+
             // Get input values
             const pounds = parseInt(document.getElementById('pounds').value) || 0;
             const soli = parseInt(document.getElementById('soli').value) || 0;
             const pence = parseInt(document.getElementById('pence').value) || 0;
+            const selectedCurrency = document.getElementById('currency').value;
 
             // Convert everything to pence
             const totalPence = (pounds * poundToSoliRate * soliToPenceRate) + (soli * soliToPenceRate) + pence;
@@ -22,13 +33,16 @@
             // Convert pence to AUD
             const audAmount = totalPence * penceToAUDRate;
 
+            // Convert AUD to the selected currency
+            const convertedAmount = audAmount * exchangeRates[selectedCurrency];
+
             // Display the result
-            document.getElementById('result').innerText = `${pounds} pounds, ${soli} soli, and ${pence} pence = $${audAmount.toFixed(2)} AUD`;
+            document.getElementById('result').innerText = `${pounds} pounds, ${soli} soli, and ${pence} pence = ${Math.round(convertedAmount)} ${selectedCurrency}`;
         }
     </script>
 </head>
 <body>
-    <h1>Loen Currency to AUD Converter</h1>
+    <h1>Fictional Currency Converter</h1>
     <form onsubmit="event.preventDefault(); convertCurrency();">
         <label for="pounds">Enter amount in pounds:</label>
         <input type="number" id="pounds" min="0">
@@ -39,6 +53,16 @@
         <label for="pence">Enter amount in pence:</label>
         <input type="number" id="pence" min="0">
 
+        <label for="currency">Select currency:</label>
+        <select id="currency">
+            <option value="AUD">AUD</option>
+            <option value="USD">USD</option>
+            <option value="GBP">GBP</option>
+            <option value="PHP">PHP</option>
+            <option value="YEN">YEN</option>
+            <option value="CAD">CAD</option>
+        </select>
+
         <button type="submit">Convert</button>
     </form>
 
@@ -46,3 +70,4 @@
     <p id="result">Enter values to see the result.</p>
 </body>
 </html>
+
